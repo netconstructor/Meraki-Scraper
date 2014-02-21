@@ -95,6 +95,8 @@ casper.then(function() {
                         return $("td:contains('Serial:')").siblings('.s3v').html()
                     });
 
+
+
                     //Only do something with the data, if we have the mac address
                     if (macAddress) {
                         //Make sure we have a good URL
@@ -113,7 +115,7 @@ casper.then(function() {
                         //post it to our fog server (Not a valid URL...) Just an example
                         var params = "mac=" + btoa("HWaddr" + macAddress).replace("=","") + "&host=" + btoa(name).replace("=","") + "&ip=" + btoa(ipAddress).replace("=","") + "&serial=" + serial + "&advanced=1&imageid="+btoa("1")+"&osid=" + btoa("50");
                         view.echo(params);
-                        xhr.open("POST", "http://fog.psd401.net/fog/service/auto.register.php?" + params, true);
+                        xhr.open("POST", "http://service-collecting-data.yourdomain.com/fog/service/auto.register.php?" + params, true);
                         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
                         //xhr.send(params);
                     }
