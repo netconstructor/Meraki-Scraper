@@ -4,8 +4,7 @@
   "private": false,
   "description":"Scrape Meraki and grab the data you need",
   "scripts": {
-    "start": "casperjs app.js",
-    "postinstall": "bower install"
+    "start": "casperjs app.js"
   },
   "repository": {
     "type": "git",
@@ -16,6 +15,7 @@
   "dependencies": {
     "phantomjs": "1.9.2-6",
     "casperjs": "1.1.0-beta3",
-    "bower":"1.2.8"
+    "jquery": "1.8.3",
+    "lodash": "2.4.1"
   }
 }

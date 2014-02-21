@@ -5,8 +5,8 @@ var fs = require('fs'); eval(fs.read('credentials.js')+'');
 //Create casper instance
 var casper = require('casper').create({
     clientScripts:  [
-        'includes/jquery/jquery.min.js',      // These two scripts will be injected in remote
-        'includes/lodash/dist/lodash.min.js'  // DOM on every request
+        'node_modules/jquery/lib/node-jquery.js',      // These two scripts will be injected in remote
+        'node_modules/lodash/dist/lodash.min.js'  // DOM on every request
     ],
     pageSettings: {
         loadImages:  false, // The WebPage instance used by Casper will
@@ -45,7 +45,7 @@ casper.then(function() {
 
     //Save this
     var view = this;
-    //Start counting what client we are at
+    //Start counting what client we are at (We can't use i because for loop finished before the first wait is loaded)
     var thisindex = 0;
     //Go until we get the number of clients
     for (var i = 0; i < parseInt(numberOfClients) + 1; i++) {
