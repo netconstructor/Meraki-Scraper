@@ -1,0 +1,21 @@
+{
+  "name": "meraki-scraper",
+  "version": "0.0.1",
+  "private": false,
+  "description":"Scrape Meraki and grab the data you need",
+  "scripts": {
+    "start": "casperjs app.js",
+    "postinstall": "bower install"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/psd401/Meraki-Scraper"
+  },
+  "author": "Brandon Martin",
+  "license": "MIT",
+  "dependencies": {
+    "phantomjs": "1.9.2-6",
+    "casperjs": "1.1.0-beta3",
+    "bower":"1.2.8"
+  }
+}
