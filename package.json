@@ -4,7 +4,7 @@
   "private": false,
   "description":"Scrape Meraki and grab the data you need",
   "scripts": {
-    "start": "casperjs app.js"
+    "start": "casperjs app.js 2> /dev/null"
   },
   "repository": {
     "type": "git",
