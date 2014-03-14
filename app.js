@@ -50,9 +50,9 @@ casper.then(function() {
     //Go until we get the number of clients
     for (var i = 0; i < parseInt(numberOfClients) + 1; i++) {
         //Wait for the next button to show up (Meaning the page is fully rendered)
-        casper.waitForSelector('a[id="next_ap"] a', function() {
+        casper.waitForSelector('a[id="next_client"] a', function() {
             //Keep waiting, lets make sure the page is ACTUALLY fully rendered
-            casper.waitForSelector('.pcc_confirm', function(){
+            casper.waitForSelector('.pcc_confirm', function() {
                 thisindex ++;
                 view.echo("--------------------------------  " + thisindex + " / " + numberOfClients); //Just for visual apeal
                 
@@ -92,13 +92,23 @@ casper.then(function() {
 
                     //Find the serial number
                     var serial = view.evaluate(function(){
-                        return $("td:contains('Serial:')").siblings('.s3v').html()
+                        return $("td:contains('Serial:')").siblings('.s3v').html();
                     });
 
+                    //Find the CPU
+                    var CPU = view.evaluate(function(){
+                        return $("td:contains('CPU:')").siblings('.s3v').html();
+                    });
 
+                    //Find the OS
+                    var OS = view.evaluate(function(){
+                        return $("#pcc_show_os_name").html();
+                    });
 
-                    //Only do something with the data, if we have the mac address
-                    if (macAddress) {
+                    
+                    
+                    //Only do something with the data, if we have the serial
+                    if (serial) {
                         //Make sure we have a good URL
                         view.echo(view.getCurrentUrl());
                         //Make it clear that we found a mac address with pretty text
@@ -113,10 +123,13 @@ casper.then(function() {
                             }
                         };
                         //post it to our fog server (Not a valid URL...) Just an example
-                        var params = "mac=" + btoa("HWaddr" + macAddress).replace("=","") + "&host=" + btoa(name).replace("=","") + "&ip=" + btoa(ipAddress).replace("=","") + "&serial=" + serial + "&advanced=1&imageid="+btoa("1")+"&osid=" + btoa("50");
+                        var URLParams = "serial=" + serial;
                         view.echo(params);
-                        xhr.open("POST", "http://service-collecting-data.yourdomain.com/fog/service/auto.register.php?" + params, true);
-                        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                        xhr.open("POST", "http://10.0.0.131/update.php?" + URLParams, true);
+                        xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+                        xhr.setRequestHeader("Content-length", params.length);
+
+                        xhr.send(params);
                         //xhr.send(params);
                     }
 
@@ -132,12 +145,20 @@ casper.then(function() {
                     if (serial) {
                         view.echo(serial);
                     }
+
+                    if (OS) {
+                        view.echo(OS);
+                    }
+
+                    if (CPU) {
+                        view.echo(CPU);
+                    }
                 } catch (err) {
                     view.echo(err);
                 }
 
                 //Go on to the next Meraki record
-                view.click('a[id="next_ap"] a');
+                view.click('a[id="next_client"] a');
             });
         });
     }
